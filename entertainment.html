@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entertainment — Samaa Plus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Gulzar&family=Source+Serif+4:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0B3D91;
+    --navy-deep: #072A66;
+    --red: #D0021B;
+    --red-bright: #E8283F;
+    --red-deep: #A50116;
+    --paper: #F5F7FA;
+    --paper-card: #FFFFFF;
+    --ink: #12181F;
+    --ink-soft: #4A5568;
+    --ink-faint: #8592A3;
+    --rule: #DCE3EA;
+    --rule-strong: #C7D0DA;
+    --gold: #E3A008;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Franklin', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  img{ max-width: 100%; display: block; }
+
+  .ur{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    direction: rtl;
+    unicode-bidi: isolate;
+    line-height: 2.1;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  [data-article]{ cursor: pointer; transition: color .15s ease; }
+  [data-article]:hover{ color: var(--red); }
+
+  /* ---------------- Utility bar ---------------- */
+  .utility-bar{
+    background: var(--navy-deep);
+    color: #CBD3DE;
+    font-size: 12.5px;
+  }
+  .utility-bar .wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 34px;
+  }
+  .utility-left{ display:flex; gap: 18px; align-items:center; }
+  .utility-right{ display:flex; gap: 14px; align-items:center; }
+  .cert-badge{
+    background: #fff;
+    color: var(--navy-deep);
+    font-weight: 800;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .lang-toggle{
+    display: flex;
+    border: 1px solid #33405A;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .lang-toggle button{
+    background: transparent;
+    border: none;
+    color: #CBD3DE;
+    font: inherit;
+    font-size: 12px;
+    padding: 3px 10px;
+    cursor: pointer;
+  }
+  .lang-toggle button.active{
+    background: var(--red-bright);
+    color: #fff;
+    font-weight: 600;
+  }
+  .masthead .lang-toggle{
+    border-color: var(--rule-strong);
+    flex-shrink: 0;
+  }
+  .masthead .lang-toggle button{
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    padding: 5px 12px;
+  }
+  .masthead .lang-toggle button.active{
+    background: var(--red);
+    color: #fff;
+  }
+
+  /* ---------------- Masthead ---------------- */
+  .masthead{
+    background: var(--paper-card);
+    border-bottom: 1px solid var(--rule);
+  }
+  .masthead .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brand{ display: flex; align-items: center; gap: 14px; cursor: pointer; }
+  .brand img{ height: 58px; width: auto; }
+  .brand-text .name{
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .brand-text .tagline{
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--ink-faint);
+    margin-top: 4px;
+  }
+  .masthead-date{
+    text-align: right;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .masthead-date .today{
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ---------------- Static nav ---------------- */
+  nav.mainnav{
+    background: var(--navy);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 6px rgba(10,21,38,0.18);
+  }
+  nav.mainnav .wrap{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    overflow-x: auto;
+  }
+  nav.mainnav a{
+    color: #E4E8EE;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: background .18s ease, border-color .18s ease;
+  }
+  nav.mainnav a:hover, nav.mainnav a:focus-visible{
+    background: rgba(255,255,255,0.07);
+    border-bottom-color: var(--red-bright);
+  }
+  nav.mainnav a.epaper-link{
+    color: var(--gold);
+  }
+  nav.mainnav a.active{
+    background: rgba(255,255,255,0.09);
+    border-bottom-color: var(--red-bright);
+    color: #fff;
+  }
+
+  /* ---------------- Category page header ---------------- */
+  .page-head{
+    padding: 34px 0 6px;
+  }
+  .page-head h1{
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--navy);
+    margin: 0 0 8px;
+  }
+  .page-head h1.ur{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-weight: 600;
+  }
+  .page-head p{
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 0;
+    max-width: 60ch;
+  }
+  html.lang-ur .page-head h1{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 26px;
+  }
+  html.lang-ur .page-head p{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+  }
+
+  /* ---------------- Category page layout: lead + secondary + sticky "Latest" sidebar ---------------- */
+  .cat-layout{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 34px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  .cat-main{ order: 2; }
+  .cat-side{ order: 1; }
+  .lead-story{ margin-bottom: 8px; }
+  .lead-story .hero-media{ margin-bottom: 16px; }
+  .lead-story h2.ur{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.9;
+    margin: 0 0 10px;
+  }
+  .secondary-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 26px;
+  }
+  .cat-side{
+    position: sticky;
+    top: 84px;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 18px 6px;
+  }
+  .cat-side h3.side-title{
+    font-size: 12.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--red);
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--rule);
+  }
+  html.lang-ur .cat-side h3.side-title{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 16px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .cat-side .side-item{ grid-template-columns: 64px 1fr; padding-bottom: 14px; margin-bottom: 14px; }
+  @media (max-width: 920px){
+    .cat-layout{ grid-template-columns: 1fr; }
+    .cat-side{ position: static; }
+    .secondary-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------------- Breaking ticker ---------------- */
+  .ticker{
+    background: var(--red);
+    color: #fff;
+    display: flex;
+    align-items: stretch;
+    font-size: 13.5px;
+    overflow: hidden;
+  }
+  .ticker-label{
+    background: var(--red-deep);
+    padding: 8px 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .ticker-track-outer{
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .ticker-track{
+    display: inline-flex;
+    gap: 60px;
+    padding: 8px 0;
+    white-space: nowrap;
+    animation: ticker 32s linear infinite;
+  }
+  .ticker-track span{ direction: rtl; unicode-bidi: isolate; font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif; }
+  .ticker-track span[data-article]{ cursor: pointer; }
+  .ticker-track span[data-article]:hover{ color: inherit; text-decoration: none; }
+  .ticker-track-outer:hover .ticker-track{ animation-play-state: paused; }
+  @keyframes ticker{
+    from{ transform: translateX(100%); }
+    to{ transform: translateX(-100%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation: none; }
+  }
+
+  /* ---------------- Section labels ---------------- */
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 42px 0 18px;
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 8px;
+  }
+  .section-head h2{
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    margin: 0;
+  }
+  .section-head a.viewall{
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--red);
+  }
+
+  /* ---------------- Hero / Lead story ---------------- */
+  .hero{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 30px;
+    padding: 30px 0 10px;
+  }
+  .hero-media{
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: #D7DEE6;
+    aspect-ratio: 16/10.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+  .tag{
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+  .tag.islamabad{ background: var(--gold); color: #1a1200; }
+  h1.lead-headline{
+    font-size: clamp(30px, 3.9vw, 40px);
+    font-weight: 600;
+    margin: 0 0 12px;
+    line-height: 1.8;
+  }
+  p.lead-deck{
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    line-height: 2;
+  }
+  .byline{
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+  .read-more{
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: var(--navy);
+    padding: 9px 18px;
+    border-radius: 2px;
+  }
+  .read-more:hover{ background: var(--red); color: #fff; }
+
+  .side-list{ display: flex; flex-direction: column; gap: 18px; }
+  .side-item{
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .side-item:last-child{ border-bottom: none; }
+  .side-thumb{
+    aspect-ratio: 1/1;
+    background: #D7DEE6;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+  }
+  .side-item h3{
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    line-height: 2;
+  }
+  .side-item .meta{ font-size: 11px; color: var(--ink-faint); }
+
+  /* ---------------- Story grid ---------------- */
+  .grid3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .card{
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .card-media{
+    aspect-ratio: 16/10;
+    background: #D7DEE6;
+  }
+  .card-body{ padding: 14px 16px 18px; }
+  .card h3{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 8px 0 8px;
+    line-height: 2;
+  }
+  .card .meta{ font-size: 11px; color: var(--ink-faint); }
+
+  /* ---------------- Islamabad Civic Watch ---------------- */
+  .civic{
+    background: var(--navy-deep);
+    color: #fff;
+    border-radius: 4px;
+    padding: 28px 26px 30px;
+    margin: 42px 0;
+  }
+  .civic-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .civic-head h2{
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 0;
+    color: #fff;
+  }
+  .civic-sub{ font-size: 12px; color: #9AA6B5; margin-top: 4px; }
+  .chips{ display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip{
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #E4E8EE;
+    padding: 6px 13px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease;
+  }
+  .chip:hover, .chip.active{
+    background: var(--gold);
+    color: #1a1200;
+    border-color: var(--gold);
+  }
+  .civic-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .civic-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    padding: 12px 14px;
+  }
+  .civic-row h4{
+    font-size: 17px;
+    margin: 0;
+    font-weight: 500;
+    line-height: 2;
+  }
+  .civic-dept{
+    flex-shrink: 0;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: var(--gold);
+    color: #1a1200;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  /* ---------------- E-Paper ---------------- */
+  .epaper{
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 30px;
+    padding: 28px;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    margin: 42px 0;
+    align-items: center;
+  }
+  .epaper-thumb{
+    border: 1px solid var(--rule-strong);
+    box-shadow: 0 6px 18px rgba(208,2,27,0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .epaper-thumb img{ width: 100%; }
+  .epaper-info h2{
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--navy);
+    margin: 0 0 8px;
+    text-transform: none;
+  }
+  .epaper-info p{
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 0 0 18px;
+    max-width: 52ch;
+  }
+  .epaper-actions{ display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-primary{
+    background: var(--navy);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 20px;
+    border-radius: 2px;
+  }
+  .btn-primary:hover{ background: var(--red); }
+  .btn-secondary{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    border: 1px solid var(--rule-strong);
+    padding: 9px 18px;
+    border-radius: 2px;
+  }
+  .btn-secondary:hover{ border-color: var(--red); color: var(--red); }
+  .archive-note{
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 12px;
+  }
+
+  /* ---------------- Interactive E-Paper (no PDF) ---------------- */
+  .epaper-share-bar{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .share-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .share-btn.whatsapp{
+    background: #25D366;
+    color: #fff;
+  }
+  .share-btn.whatsapp:hover{ background: #1FB855; }
+  .share-btn.copy{
+    background: var(--paper-card);
+    border: 1px solid var(--rule-strong);
+    color: var(--ink-soft);
+  }
+  .share-btn.copy:hover{ border-color: var(--red); color: var(--red); }
+  html.lang-ur .share-btn{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+  }
+
+  .epaper-sheet{
+    background: var(--paper-card);
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    padding: 30px;
+    margin-top: 22px;
+  }
+  .epaper-sheet-head{
+    text-align: center;
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+  }
+  .epaper-sheet-head .masthead-name{
+    font-family: 'Source Serif 4', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .epaper-sheet-head .masthead-sub{
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+  }
+  html.lang-ur .epaper-sheet-head .masthead-sub{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+  }
+  .epaper-sheet .lead-story{
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+  .epaper-columns{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .epaper-col{
+    padding: 0 18px;
+    border-right: 1px solid var(--rule);
+  }
+  .epaper-col:last-child{ border-right: none; }
+  .epaper-col-label{
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--red);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--rule);
+  }
+  html.lang-ur .epaper-col-label{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14.5px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .epaper-headline{
+    font-size: 14.5px;
+    line-height: 2.1;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+  }
+  .epaper-headline:last-child{ border-bottom: none; }
+  .epaper-headline:hover{ color: var(--red); }
+  @media (max-width: 820px){
+    .epaper-columns{ grid-template-columns: 1fr; }
+    .epaper-col{ border-right: none; border-bottom: 1px solid var(--rule); padding: 0 0 10px; margin-bottom: 14px; }
+  }
+
+  /* ---------------- Category blocks (World News style) ---------------- */
+  .cat-block{ margin: 42px 0; }
+
+  /* ---------------- Article view ---------------- */
+  .article-page{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 34px 0 70px;
+  }
+  .back-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 22px;
+  }
+  .back-link:hover{ color: var(--red-deep); }
+  .article-headline{
+    font-size: clamp(28px, 3.6vw, 38px);
+    font-weight: 600;
+    line-height: 1.9;
+    margin: 14px 0 10px;
+  }
+  .article-hero-img{
+    aspect-ratio: 16/9;
+    background: #D7DEE6;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    margin: 20px 0 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+  .article-body p{
+    font-size: 16.5px;
+    line-height: 2.3;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+
+  /* ---------------- Footer ---------------- */
+  footer{
+    background: var(--navy-deep);
+    color: #B4BCC7;
+    margin-top: 50px;
+    padding: 40px 0 26px;
+    font-size: 13px;
+  }
+  .footer-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 30px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid #24314A;
+  }
+  .footer-grid h4{
+    color: #fff;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 0 0 14px;
+  }
+  .footer-grid a{
+    display: block;
+    color: #B4BCC7;
+    margin-bottom: 9px;
+  }
+  .footer-grid a:hover{ color: var(--red-bright); }
+  .footer-brand .name{
+    font-family: 'Source Serif 4', serif;
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .footer-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: #7C8899;
+  }
+
+  /* ---------------- Responsive ---------------- */
+  @media (max-width: 920px){
+    .hero{ grid-template-columns: 1fr; }
+    .grid3{ grid-template-columns: 1fr 1fr; }
+    .civic-list{ grid-template-columns: 1fr; }
+    .epaper{ grid-template-columns: 1fr; }
+    .footer-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px){
+    .grid3{ grid-template-columns: 1fr; }
+    .masthead .wrap{ justify-content: center; text-align: center; }
+    .masthead-date{ text-align: center; }
+    .footer-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------------- Urdu UI-chrome readability ---------------- */
+  html.lang-ur nav.mainnav a{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 2.2;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  html.lang-ur .utility-bar,
+  html.lang-ur .utility-bar span:not(.cert-badge){
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+  }
+  html.lang-ur .section-head h2{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 18px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur .section-head a.viewall{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+  }
+  html.lang-ur .tag{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur .civic-head h2{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 18px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur .civic-sub{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+  }
+  html.lang-ur .read-more,
+  html.lang-ur .btn-primary,
+  html.lang-ur .btn-secondary{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur .epaper-info h2{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+  }
+  html.lang-ur .epaper-info p,
+  html.lang-ur .archive-note{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+  }
+  html.lang-ur .byline{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+  }
+  html.lang-ur .ticker-label{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur footer .footer-grid h4{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  html.lang-ur footer .footer-grid a,
+  html.lang-ur .footer-bottom span,
+  html.lang-ur .footer-brand p{
+    font-family: 'Gulzar', 'Noto Nastaliq Urdu', serif;
+    font-size: 14.5px;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--red-bright);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div class="wrap">
+      <a class="brand" href="index.html" style="text-decoration:none;">
+        <img src="data:image/png;base64,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" alt="Samaa Plus logo">
+        <div class="brand-text">
+          <div class="name">Samaa Plus</div>
+          <div class="tagline" data-i18n="tagline">Islamabad · Pakistan · International</div>
+        </div>
+      </a>
+      <div class="lang-toggle">
+        <button type="button" class="active" data-lang="en">EN</button>
+        <button type="button" data-lang="ur">اردو</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Static nav -->
+  <nav class="mainnav">
+    <div class="wrap">
+      <a href="index.html" data-i18n="nav-home">Home</a>
+      <a href="pakistan.html" data-i18n="nav-pakistan">Pakistan</a>
+      <a href="epaper.html" class="epaper-link" data-i18n="nav-epaper">E-Paper</a>
+      <a href="exclusive.html" data-i18n="nav-exclusive">Exclusive</a>
+      <a href="sports.html" data-i18n="nav-sports">Sports</a>
+      <a href="entertainment.html" class="active" data-i18n="nav-entertainment">Entertainment</a>
+      <a href="international.html" data-i18n="nav-world">International</a>
+      <a href="islamabad.html" data-i18n="nav-islamabad">Islamabad</a>
+      <a href="video.html" data-i18n="nav-video">Video Gallery</a>
+      <a href="columns.html" data-i18n="nav-columns">Columns</a>
+    </div>
+  </nav>
+
+  <!-- Breaking ticker -->
+  <div class="ticker">
+    <div class="ticker-label" data-i18n="ticker-label">Breaking</div>
+    <div class="ticker-track-outer">
+      <div class="ticker-track">
+        <span class="ur" data-article="tick1">سی ڈی اے کا وفاقی دارالحکومت میں نئے ترقیاتی منصوبوں کا اعلان</span>
+        <span class="ur" data-article="tick2">این ایچ اے کی جانب سے شاہراہوں کی مرمت کا کام تیز</span>
+        <span class="ur" data-article="tick3">ڈی ایم اے کی زیر نگرانی صفائی مہم کا دوسرا مرحلہ شروع</span>
+        <span class="ur" data-article="tick4">ہاؤسنگ فاؤنڈیشن کے نئے رہائشی منصوبے کی منظوری</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===================== LIST VIEW ===================== -->
+    <div id="listView">
+
+      <div class="page-head">
+        <h1 class="ur">تفریح</h1>
+        <p class="ur">فلم، موسیقی اور ٹی وی سے متعلق تازہ ترین خبریں</p>
+      </div>
+
+      <div class="cat-layout">
+        <div class="cat-main">
+        <div class="lead-story">
+          <div class="hero-media">1280 × 720 — lead photo</div>
+          <h2 class="ur" data-article="top2">مقامی فنکاروں کی نئی ثقافتی نمائش کا آغاز</h2>
+          <div class="byline ur">انٹرٹینمنٹ ڈیسک</div>
+        </div>
+          <div class="secondary-grid">
+          <div class="card">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3 class="ur" data-article="ent1">مقامی فلم میلے میں نئی پاکستانی فلموں کی نمائش</h3>
+              <div class="meta">3 HOURS AGO</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3 class="ur" data-article="ent2">معروف گلوکار کے نئے البم کی ریلیز کا اعلان</h3>
+              <div class="meta">5 HOURS AGO</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3 class="ur" data-article="ent3">ٹی وی ڈرامہ ایوارڈز کی تقریب کی تاریخ طے</h3>
+              <div class="meta">8 HOURS AGO</div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <aside class="cat-side">
+          <h3 class="side-title" data-i18n="latest-title">Latest</h3>
+          <div class="side-item">
+            <div class="side-thumb"></div>
+            <div>
+              <h3 class="ur" data-article="hero1">وفاقی دارالحکومت میں انتظامی امور کی بہتری کے لیے نئے اقدامات</h3>
+              <div class="meta">ISLAMABAD</div>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-thumb"></div>
+            <div>
+              <h3 class="ur" data-article="intl1">امریکہ اور یورپی یونین کے مابین تجارتی مذاکرات کا نیا دور</h3>
+              <div class="meta">INTERNATIONAL</div>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-thumb"></div>
+            <div>
+              <h3 class="ur" data-article="pk1">سینیٹ میں نئے بجٹ ترامیم پر بحث کا آغاز</h3>
+              <div class="meta">PAKISTAN</div>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-thumb"></div>
+            <div>
+              <h3 class="ur" data-article="sp1">قومی ہاکی ٹیم کی عالمی کپ کے لیے تیاریاں عروج پر</h3>
+              <div class="meta">SPORTS</div>
+            </div>
+          </div>
+          <div class="side-item">
+            <div class="side-thumb"></div>
+            <div>
+              <h3 class="ur" data-article="exc1">وفاقی بجٹ سے متعلق حکومتی حلقوں کی خصوصی گفتگو</h3>
+              <div class="meta">EXCLUSIVE</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+    <!-- ===================== END LIST VIEW ===================== -->
+
+    <!-- ===================== ARTICLE VIEW ===================== -->
+    <div id="articleView" class="article-page" style="display:none;">
+      <a href="#" class="back-link" id="backList">← Back to Entertainment</a>
+      <span class="tag ur" id="articleTag"></span>
+      <h1 class="ur article-headline" id="articleHeadline"></h1>
+      <div class="byline ur" id="articleByline"></div>
+      <div class="article-hero-img">1280 × 720 — story photo</div>
+      <div class="ur article-body" id="articleBody"></div>
+    </div>
+    <!-- ===================== END ARTICLE VIEW ===================== -->
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="name">Samaa Plus</div>
+          <p data-i18n="footer-about">An ABC Certified daily covering Islamabad's civic administration, national affairs, and the wider world — in print and now online.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer-sections">Sections</h4>
+          <a href="international.html" data-i18n="nav-world">International</a>
+          <a href="pakistan.html" data-i18n="nav-pakistan">Pakistan</a>
+          <a href="islamabad.html" data-i18n="nav-islamabad">Islamabad</a>
+          <a href="sports.html" data-i18n="nav-sports">Sports</a>
+          <a href="entertainment.html" data-i18n="nav-entertainment">Entertainment</a>
+        </div>
+        <div>
+          <h4 data-i18n="footer-more">More</h4>
+          <a href="index.html#epaper" data-i18n="nav-epaper">E-Paper Archive</a>
+          <a href="#" data-i18n="footer-about-link">About Us</a>
+          <a href="#" data-i18n="footer-contact">Contact</a>
+          <a href="#" data-i18n="footer-advertise">Advertise</a>
+        </div>
+        <div>
+          <h4 data-i18n="footer-follow">Follow</h4>
+          <a href="#">Facebook</a>
+          <a href="#">X (Twitter)</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-i18n="footer-copy">© 2026 Samaa Plus. All rights reserved.</span>
+        <span>ABC Certified</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Live date
+  (function(){
+    const el = document.getElementById('todayDate');
+    if(!el) return;
+    const d = new Date();
+    el.textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  })();
+
+  /* ---------------- Article routing (SPA-style within this page) ---------------- */
+  const articles = {
+    hero1: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'وفاقی دارالحکومت میں انتظامی امور کی بہتری کے لیے نئے اقدامات',
+      byline: 'خبر نگار خصوصی — اسلام آباد',
+      body: [
+        'سی ڈی اے، این ایچ اے اور ڈی ایم اے کے مابین رابطہ کاری بڑھانے کے لیے مشترکہ کمیٹی تشکیل دینے کا فیصلہ کیا گیا ہے۔ کمیٹی کا پہلا اجلاس ڈپٹی ڈائریکٹر کی زیرصدارت آئندہ ہفتے متوقع ہے۔',
+        'ذرائع کے مطابق اس اقدام کا مقصد وفاقی دارالحکومت میں جاری ترقیاتی منصوبوں میں تاخیر کو کم کرنا اور شہریوں کو بہتر سہولیات کی فراہمی یقینی بنانا ہے۔',
+        'حکام نے بتایا کہ کمیٹی کی سفارشات پر عمل درآمد کی نگرانی براہ راست وزارت کے سطح پر کی جائے گی۔'
+      ]
+    },
+    side1: {
+      tag: 'پاکستان',
+      headline: 'پارلیمانی کمیٹی کا سینیٹ اجلاس میں اہم امور پر غور',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: [
+        'سینیٹ کی متعلقہ قائمہ کمیٹی نے اجلاس میں کئی اہم قانون سازی کے امور کا جائزہ لیا اور متعلقہ حکام سے تفصیلی بریفنگ طلب کی۔',
+        'کمیٹی ارکان نے آئندہ اجلاس میں حتمی سفارشات پیش کرنے کی ہدایت کی۔'
+      ]
+    },
+    side2: {
+      tag: 'کھیل',
+      headline: 'پاکستان کرکٹ ٹیم کی نئی سیریز کے لیے تیاریاں مکمل',
+      byline: 'اسپورٹس ڈیسک',
+      body: [
+        'قومی کرکٹ ٹیم نے آئندہ سیریز کے لیے اپنی تربیتی سرگرمیاں مکمل کر لی ہیں۔ کوچنگ اسٹاف کے مطابق ٹیم کا مورال بلند اور کھلاڑی فٹ ہیں۔',
+        'سیریز کا پہلا میچ آئندہ ہفتے کھیلا جائے گا جس کے لیے شائقین میں زبردست جوش پایا جاتا ہے۔'
+      ]
+    },
+    side3: {
+      tag: 'پاکستان',
+      headline: 'وزیراعظم کی زیر صدارت اعلیٰ سطحی اجلاس، اہم فیصلے متوقع',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: [
+        'اجلاس میں معاشی اور انتظامی امور پر تفصیلی غور کیا گیا۔ ذرائع کے مطابق آئندہ چند دنوں میں اہم فیصلوں کا اعلان متوقع ہے۔'
+      ]
+    },
+    top1: {
+      tag: 'بین الاقوامی',
+      headline: 'خطے میں سفارتی رابطوں میں اضافہ، اہم پیش رفت متوقع',
+      byline: 'ورلڈ ڈیسک',
+      body: [
+        'خطے کے مختلف ممالک کے مابین سفارتی سطح پر رابطے بڑھ گئے ہیں۔ مبصرین کے مطابق آئندہ دنوں میں کئی اہم اعلانات متوقع ہیں۔'
+      ]
+    },
+    top2: {
+      tag: 'تفریح',
+      headline: 'مقامی فنکاروں کی نئی ثقافتی نمائش کا آغاز',
+      byline: 'انٹرٹینمنٹ ڈیسک',
+      body: [
+        'شہر میں مقامی فنکاروں کے فن پاروں کی نمائش کا آغاز ہو گیا ہے، جس میں مختلف شعبوں سے تعلق رکھنے والے فنکار اپنے کام پیش کر رہے ہیں۔'
+      ]
+    },
+    top3: {
+      tag: 'پاکستان',
+      headline: 'صوبائی حکومت کی جانب سے نئے تعلیمی پروگرام کا اعلان',
+      byline: 'اسٹاف رپورٹر',
+      body: [
+        'صوبائی حکومت نے طلبہ کی سہولت کے لیے نیا تعلیمی پروگرام متعارف کرانے کا اعلان کیا ہے، جس کا اطلاق نئے تعلیمی سال سے ہوگا۔'
+      ]
+    },
+    intl1: {
+      tag: 'بین الاقوامی', headline: 'امریکہ اور یورپی یونین کے مابین تجارتی مذاکرات کا نیا دور',
+      byline: 'ورلڈ ڈیسک',
+      body: ['امریکہ اور یورپی یونین کے وفود کے مابین تجارتی معاملات پر مذاکرات کا نیا دور شروع ہو گیا ہے، جس میں ٹیرف اور مارکیٹ رسائی کے امور زیر بحث ہیں۔']
+    },
+    intl2: {
+      tag: 'بین الاقوامی', headline: 'مشرق وسطیٰ میں کشیدگی کم کرنے کے لیے بین الاقوامی کوششیں',
+      byline: 'ورلڈ ڈیسک',
+      body: ['عالمی برادری کی جانب سے خطے میں کشیدگی کم کرنے کے لیے سفارتی کوششیں تیز کر دی گئی ہیں۔']
+    },
+    intl3: {
+      tag: 'بین الاقوامی', headline: 'عالمی موسمیاتی کانفرنس میں ترقی پذیر ممالک کا مطالبہ',
+      byline: 'ورلڈ ڈیسک',
+      body: ['ترقی پذیر ممالک نے موسمیاتی تبدیلی سے نمٹنے کے لیے مالی معاونت میں اضافے کا مطالبہ کیا ہے۔']
+    },
+    pk1: {
+      tag: 'پاکستان', headline: 'سینیٹ میں نئے بجٹ ترامیم پر بحث کا آغاز',
+      byline: 'پارلیمانی رپورٹر',
+      body: ['سینیٹ اجلاس میں نئی بجٹ ترامیم پر تفصیلی بحث کا آغاز ہو گیا، حزب اختلاف نے متعدد نکات پر تحفظات کا اظہار کیا۔']
+    },
+    pk2: {
+      tag: 'پاکستان', headline: 'وفاقی کابینہ کا اجلاس، اہم پالیسی فیصلوں کی منظوری',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['وفاقی کابینہ کے اجلاس میں کئی اہم پالیسی فیصلوں کی منظوری دی گئی جن کا اطلاق آئندہ ماہ سے ہوگا۔']
+    },
+    pk3: {
+      tag: 'پاکستان', headline: 'قومی اسمبلی میں تعلیمی اصلاحات کے بل پر رائے شماری',
+      byline: 'پارلیمانی رپورٹر',
+      body: ['قومی اسمبلی میں تعلیمی اصلاحات سے متعلق بل پر رائے شماری کرائی گئی جو اکثریت رائے سے منظور ہو گیا۔']
+    },
+    sp1: {
+      tag: 'کھیل', headline: 'قومی ہاکی ٹیم کی عالمی کپ کے لیے تیاریاں عروج پر',
+      byline: 'اسپورٹس ڈیسک',
+      body: ['قومی ہاکی ٹیم نے عالمی کپ کے لیے تربیتی کیمپ کا آغاز کر دیا، کوچ نے ٹیم کی کارکردگی پر اطمینان کا اظہار کیا۔']
+    },
+    sp2: {
+      tag: 'کھیل', headline: 'مقامی کرکٹ لیگ کے فائنل میچ کی تاریخ کا اعلان',
+      byline: 'اسپورٹس ڈیسک',
+      body: ['مقامی کرکٹ لیگ کے منتظمین نے فائنل میچ کی تاریخ کا باضابطہ اعلان کر دیا ہے۔']
+    },
+    sp3: {
+      tag: 'کھیل', headline: 'نوجوان کھلاڑیوں کے لیے نئے تربیتی پروگرام کا آغاز',
+      byline: 'اسپورٹس ڈیسک',
+      body: ['نوجوان کھلاڑیوں کی صلاحیتوں کو نکھارنے کے لیے نیا تربیتی پروگرام شروع کر دیا گیا ہے۔']
+    },
+    ent1: {
+      tag: 'تفریح', headline: 'مقامی فلم میلے میں نئی پاکستانی فلموں کی نمائش',
+      byline: 'انٹرٹینمنٹ ڈیسک',
+      body: ['مقامی فلم میلے میں کئی نئی پاکستانی فلموں کی نمائش کی گئی جنہیں ناظرین کی جانب سے سراہا گیا۔']
+    },
+    ent2: {
+      tag: 'تفریح', headline: 'معروف گلوکار کے نئے البم کی ریلیز کا اعلان',
+      byline: 'انٹرٹینمنٹ ڈیسک',
+      body: ['معروف گلوکار نے اپنے نئے میوزک البم کی ریلیز کی تاریخ کا اعلان کر دیا ہے۔']
+    },
+    ent3: {
+      tag: 'تفریح', headline: 'ٹی وی ڈرامہ ایوارڈز کی تقریب کی تاریخ طے',
+      byline: 'انٹرٹینمنٹ ڈیسک',
+      body: ['اس سال کے ٹی وی ڈرامہ ایوارڈز کی تقریب کی تاریخ کا باضابطہ اعلان کر دیا گیا ہے۔']
+    },
+    exc1: {
+      tag: 'خصوصی', headline: 'وفاقی بجٹ سے متعلق حکومتی حلقوں کی خصوصی گفتگو، اہم تفصیلات سامنے آ گئیں',
+      byline: 'خصوصی رپورٹ — سما پلس',
+      body: ['حکومتی ذرائع کے مطابق آئندہ بجٹ میں کئی اہم شعبوں کے لیے مختص فنڈز میں تبدیلی زیر غور ہے۔ سما پلس کو موصول دستاویزات کے مطابق حتمی فیصلہ آئندہ ہفتے متوقع ہے۔']
+    },
+    exc2: {
+      tag: 'خصوصی', headline: 'اسلام آباد کے بڑے ترقیاتی منصوبے کی اندرونی دستاویزات سما پلس کے ہاتھ لگ گئیں',
+      byline: 'خصوصی رپورٹ — سما پلس',
+      body: ['منصوبے کی تکمیل میں تاخیر کی وجوہات سے متعلق اندرونی دستاویزات سامنے آ گئی ہیں، جن میں فنڈز کی کمی اور انتظامی رکاوٹوں کا ذکر کیا گیا ہے۔']
+    },
+    exc3: {
+      tag: 'خصوصی', headline: 'سینئر حکومتی عہدیدار کا سما پلس سے خصوصی انٹرویو',
+      byline: 'خصوصی رپورٹ — سما پلس',
+      body: ['انٹرویو میں عہدیدار نے حکومتی پالیسیوں اور آئندہ لائحہ عمل سے متعلق کئی اہم سوالات کے جوابات دیے۔']
+    },
+    vid1: {
+      tag: 'ویڈیو', headline: 'اسلام آباد میں نئے میٹرو منصوبے کی ویڈیو رپورٹ',
+      byline: 'ملٹی میڈیا ڈیسک',
+      body: ['ویڈیو رپورٹ میں منصوبے کی موجودہ صورتحال اور روٹ سے متعلق تفصیلات دکھائی گئی ہیں۔']
+    },
+    vid2: {
+      tag: 'ویڈیو', headline: 'قومی کرکٹ ٹیم کی پریکٹس سیشن کی جھلکیاں',
+      byline: 'ملٹی میڈیا ڈیسک',
+      body: ['ویڈیو میں قومی ٹیم کے پریکٹس سیشن کی جھلکیاں شامل ہیں جہاں کھلاڑی سیریز کی تیاری میں مصروف نظر آئے۔']
+    },
+    vid3: {
+      tag: 'ویڈیو', headline: 'ثقافتی میلے کی مکمل ویڈیو کوریج',
+      byline: 'ملٹی میڈیا ڈیسک',
+      body: ['ویڈیو کوریج میں میلے کی مختلف سرگرمیوں اور شرکاء کے تاثرات شامل کیے گئے ہیں۔']
+    },
+    tick1: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'سی ڈی اے کا وفاقی دارالحکومت میں نئے ترقیاتی منصوبوں کا اعلان',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['وفاقی دارالحکومت میں کئی نئے ترقیاتی منصوبوں کا اعلان کر دیا گیا ہے، جن میں سڑکوں، پارکس اور نکاسی آب کے نظام کی بہتری شامل ہے۔', 'حکام کے مطابق منصوبوں پر عمل درآمد آئندہ مہینوں میں مرحلہ وار شروع ہوگا۔']
+    },
+    tick2: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'شاہراہوں کی مرمت کا کام تیز',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['شہر کی مرکزی شاہراہوں کی مرمت کا کام تیزی سے جاری ہے تاکہ بارشوں سے پہلے تمام خراب حصے بہتر بنائے جا سکیں۔']
+    },
+    tick3: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'زیر نگرانی صفائی مہم کا دوسرا مرحلہ شروع',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['شہر بھر میں صفائی مہم کا دوسرا مرحلہ شروع کر دیا گیا ہے، جس میں مختلف سیکٹرز کو ترجیحی بنیادوں پر شامل کیا گیا ہے۔']
+    },
+    tick4: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'نئے رہائشی منصوبے کی منظوری',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['کم آمدنی والے خاندانوں کے لیے نئے رہائشی منصوبے کی منظوری دے دی گئی ہے، جس کے تحت سستے گھر فراہم کیے جائیں گے۔']
+    },
+    civ1: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'سیکٹر میں نئے پارک کی تعمیر کا فیصلہ',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['شہر کے ایک سیکٹر میں نئے پبلک پارک کی تعمیر کا فیصلہ کیا گیا ہے، جس سے مقامی رہائشیوں کو تفریحی سہولت میسر آئے گی۔']
+    },
+    civ2: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'موٹروے کی توسیع کا منصوبہ پیش',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['شہر کو ملانے والی موٹروے کی توسیع کا منصوبہ پیش کر دیا گیا ہے تاکہ بڑھتے ہوئے ٹریفک دباؤ کو کم کیا جا سکے۔']
+    },
+    civ3: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'نئے ویسٹ مینجمنٹ نظام کے نفاذ کا اعلان',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['شہر میں کچرا اٹھانے اور ٹھکانے لگانے کے جدید نظام کے نفاذ کا اعلان کر دیا گیا ہے۔']
+    },
+    civ4: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'کم آمدنی والے خاندانوں کے لیے نیا رہائشی منصوبہ',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['کم آمدنی والے خاندانوں کے لیے سستے گھروں پر مشتمل نیا رہائشی منصوبہ متعارف کرایا گیا ہے۔']
+    },
+    civ5: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'اضلاعی ترقیاتی اجلاس، اہم فیصلے متوقع',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['اضلاعی ترقیاتی اجلاس میں کئی اہم منصوبوں کا جائزہ لیا گیا اور آئندہ کے لیے سفارشات مرتب کی گئیں۔']
+    },
+    civ6: {
+      tag: 'اسلام آباد', tagClass: 'islamabad',
+      headline: 'عمارتوں کی تعمیر کے قوانین میں نظرثانی',
+      byline: 'اسٹاف رپورٹر — اسلام آباد',
+      body: ['تعمیراتی قوانین میں نظرثانی کی گئی ہے تاکہ حفاظتی معیارات کو مزید بہتر بنایا جا سکے۔']
+    },
+    col1: {
+      tag: 'کالم',
+      headline: 'وفاقی دارالحکومت کی انتظامیہ: تبدیلی کی ضرورت کیوں؟',
+      byline: 'قلم کار — سما پلس',
+      body: [
+        'اسلام آباد جیسے اہم شہر کی انتظامیہ میں بہتری کے لیے صرف اعلانات نہیں بلکہ عملی اقدامات کی ضرورت ہے۔ اس کالم میں مصنف نے موجودہ نظام کی خامیوں اور ممکنہ حل پر روشنی ڈالی ہے۔',
+        'مصنف کے مطابق شہری خدمات میں شفافیت اور جوابدہی کو یقینی بنانا وقت کی اہم ترین ضرورت ہے۔'
+      ]
+    },
+    col2: {
+      tag: 'کالم',
+      headline: 'معیشت اور عام آدمی: بڑھتی مہنگائی کے اثرات',
+      byline: 'قلم کار — سما پلس',
+      body: [
+        'اس کالم میں مہنگائی کے عام آدمی کی زندگی پر پڑنے والے اثرات کا جائزہ لیا گیا ہے، اور حکومتی پالیسیوں سے متعلق چند تجاویز بھی پیش کی گئی ہیں۔'
+      ]
+    },
+    col3: {
+      tag: 'کالم',
+      headline: 'نوجوان نسل اور ڈیجیٹل میڈیا کا بڑھتا اثر',
+      byline: 'قلم کار — سما پلس',
+      body: [
+        'ڈیجیٹل میڈیا کے بڑھتے استعمال نے نوجوان نسل کی سوچ اور طرزِ زندگی کو کس طرح متاثر کیا ہے، اس کالم میں اسی موضوع پر بحث کی گئی ہے۔'
+      ]
+    }
+  };
+
+
+  const listView = document.getElementById('listView');
+  const articleView = document.getElementById('articleView');
+
+  function openArticle(id){
+    const a = articles[id];
+    if(!a) return;
+    const tagEl = document.getElementById('articleTag');
+    tagEl.textContent = a.tag;
+    tagEl.className = 'tag ur' + (a.tagClass ? ' ' + a.tagClass : '');
+    document.getElementById('articleHeadline').textContent = a.headline;
+    document.getElementById('articleByline').textContent = a.byline;
+    document.getElementById('articleBody').innerHTML = a.body.map(p => `<p>${p}</p>`).join('');
+    listView.style.display = 'none';
+    articleView.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function showList(){
+    listView.style.display = '';
+    articleView.style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('[data-article]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openArticle(el.getAttribute('data-article'));
+    });
+  });
+
+  document.getElementById('backList').addEventListener('click', (e) => {
+    e.preventDefault();
+    showList();
+  });
+
+  // E-Paper share buttons (WhatsApp + copy link) — only present on epaper.html
+  const waBtn = document.getElementById('waShareBtn');
+  if(waBtn){
+    waBtn.addEventListener('click', () => {
+      const url = window.location.href;
+      const msg = encodeURIComponent('آج کا ای پیپر — Samaa Plus: ' + url);
+      window.open('https://wa.me/?text=' + msg, '_blank');
+    });
+  }
+  const copyBtn = document.getElementById('copyLinkBtn');
+  if(copyBtn){
+    copyBtn.addEventListener('click', () => {
+      const span = copyBtn.querySelector('span');
+      const original = span.textContent;
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        span.textContent = (document.documentElement.classList.contains('lang-ur')) ? 'لنک کاپی ہو گیا!' : 'Link Copied!';
+        setTimeout(() => { span.textContent = original; }, 1800);
+      }).catch(() => {});
+    });
+  }
+
+  const i18n = {
+    en: {
+      tagline: 'Islamabad · Pakistan · International',
+      'nav-home': 'Home', 'nav-world': 'International', 'nav-pakistan': 'Pakistan', 'nav-islamabad': 'Islamabad',
+      'nav-sports': 'Sports', 'nav-entertainment': 'Entertainment', 'nav-exclusive': 'Exclusive', 'nav-video': 'Video Gallery', 'nav-columns': 'Columns', 'nav-epaper': 'E-Paper',
+      'ticker-label': 'Breaking', 'tag-islamabad': 'Top Story', 'byline': 'Special Correspondent — Islamabad',
+      'read-more': 'Read Full Story', 'sec-top': 'Top Stories', 'viewall': 'View all →',
+      'tag-world': 'International', 'tag-entertainment': 'Entertainment', 'tag-pakistan': 'Pakistan', 'tag-exclusive': 'Exclusive', 'tag-columns': 'Columns',
+      'civic-title': 'Islamabad Ki Awaz',
+      'civic-sub': "Updates on Islamabad's civic administration & local governance",
+      'epaper-title': "Today's E-Paper",
+      'epaper-desc': "Read the exact print edition, page by page — the same layout our readers have followed for years, now available on any screen.",
+      'epaper-view': 'View Full Edition', 'epaper-download': 'Download PDF',
+      'epaper-archive': 'Browse past editions in the Archive — searchable by date, back to issue No. 1.',
+      'footer-about': "An ABC Certified daily covering Islamabad's civic administration, national affairs, and the wider world — in print and now online.",
+      'footer-sections': 'Sections', 'footer-more': 'More', 'footer-follow': 'Follow',
+      'footer-about-link': 'About Us', 'footer-contact': 'Contact', 'footer-advertise': 'Advertise',
+      'footer-copy': '© 2026 Samaa Plus. All rights reserved.',
+      'back-home': '← Back to Home',
+      'latest-title': 'Latest',
+      'epaper-share-wa': 'Share on WhatsApp',
+      'epaper-copy-link': 'Copy Link'
+    },
+    ur: {
+      tagline: 'اسلام آباد · پاکستان · دنیا',
+      'nav-home': 'صفحہ اول', 'nav-world': 'بین الاقوامی', 'nav-pakistan': 'پاکستان', 'nav-islamabad': 'اسلام آباد',
+      'nav-sports': 'کھیل', 'nav-entertainment': 'تفریح', 'nav-exclusive': 'خصوصی', 'nav-video': 'ویڈیوز', 'nav-columns': 'کالم', 'nav-epaper': 'ای پیپر',
+      'ticker-label': 'بریکنگ', 'tag-islamabad': 'اہم خبر', 'byline': 'خبر نگار خصوصی — اسلام آباد',
+      'read-more': 'مکمل خبر پڑھیں', 'sec-top': 'اہم خبریں', 'viewall': 'سب دیکھیں ←',
+      'tag-world': 'بین الاقوامی', 'tag-entertainment': 'تفریح', 'tag-pakistan': 'پاکستان', 'tag-exclusive': 'خصوصی', 'tag-columns': 'کالم',
+      'civic-title': 'اسلام آباد کی آواز',
+      'civic-sub': 'اسلام آباد کی مقامی انتظامیہ کی تازہ ترین خبریں',
+      'epaper-title': 'آج کا ای پیپر',
+      'epaper-desc': 'اصل پرنٹ ایڈیشن، صفحہ بہ صفحہ — وہی ترتیب جو ہمارے قارئین برسوں سے دیکھتے آئے ہیں، اب ہر اسکرین پر دستیاب۔',
+      'epaper-view': 'مکمل ایڈیشن دیکھیں', 'epaper-download': 'پی ڈی ایف ڈاؤن لوڈ کریں',
+      'epaper-archive': 'گزشتہ شمارے آرکائیو میں دیکھیں — تاریخ کے مطابق تلاش کریں۔',
+      'footer-about': 'اے بی سی سرٹیفائیڈ روزنامہ، اسلام آباد کی انتظامیہ، قومی امور اور دنیا بھر کی خبریں — پرنٹ اور اب آن لائن بھی۔',
+      'footer-sections': 'سیکشنز', 'footer-more': 'مزید', 'footer-follow': 'فالو کریں',
+      'footer-about-link': 'ہمارے بارے میں', 'footer-contact': 'رابطہ', 'footer-advertise': 'اشتہار',
+      'footer-copy': '© 2026 سما پلس۔ جملہ حقوق محفوظ ہیں۔',
+      'back-home': '← ہوم پیج پر واپس جائیں',
+      'latest-title': 'تازہ ترین',
+      'epaper-share-wa': 'واٹس ایپ پر شیئر کریں',
+      'epaper-copy-link': 'لنک کاپی کریں'
+    }
+  };
+
+
+  function applyLang(lang){
+    document.querySelectorAll('.lang-toggle button').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.classList.toggle('lang-ur', lang === 'ur');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(i18n[lang] && i18n[lang][key] !== undefined){
+        el.textContent = i18n[lang][key];
+      }
+    });
+  }
+
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      try { localStorage.setItem('sama_lang', lang); } catch(e) {}
+      applyLang(lang);
+    });
+  });
+
+  // Restore saved language preference (persists across pages on this site)
+  (function(){
+    let savedLang = 'en';
+    try { savedLang = localStorage.getItem('sama_lang') || 'en'; } catch(e) {}
+    if(savedLang !== 'en'){ applyLang(savedLang); }
+  })();
+</script>
+
+</body>
+</html>
